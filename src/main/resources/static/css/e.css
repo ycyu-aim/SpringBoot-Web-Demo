@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.sss li {
+line-height:30px; /*li的行高，可以控制li的间距*/
+font-size:30px;  /*li内文字的大小*/
+padding-left:20px;  /*li内文字距离左边的距离*/
+color:red;list-style: none; /*去调li的点 ,一般不用li自带的点*/
+}
