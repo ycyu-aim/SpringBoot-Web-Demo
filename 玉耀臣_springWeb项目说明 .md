@@ -2,7 +2,7 @@
 
 2. 项目起止时间2020.9.29-2020.10.9
 
-2. Git地址：
+2. Git地址：https://github.com/yyc19980227/SpringBoot-Web-Demo.git
 
 3. **项目主题**：人事管理
 
