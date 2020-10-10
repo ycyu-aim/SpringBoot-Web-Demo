@@ -3,6 +3,7 @@ package com.example.demotest.Dao;
 import com.example.demotest.Entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Map;
@@ -93,4 +94,12 @@ public interface UsersDao extends JpaRepository<Users,Long> , JpaSpecificationEx
      */
     @Query(value = " SELECT USERNAME FROM TB_USERS where USERNAME LIKE '%'||?1||'%' ",nativeQuery = true)
     Set<String> findUsernameByUsernameLike(String username);
+
+    @Modifying
+    @Query(value = "UPDATE  TB_USERS SET RID = 2 WHERE ID=?1",nativeQuery = true)
+    void setUserRole(Long id);
+
+    @Modifying
+    @Query(value = "UPDATE  TB_USERS SET PASSWORD = ?2 WHERE ID=?1",nativeQuery = true)
+    void updatePassword(Long id,String password);
 }

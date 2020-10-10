@@ -2,7 +2,10 @@ package com.example.demotest.Service;
 
 
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.example.demotest.Dao.UsersDao;
+import com.example.demotest.Entity.Role;
 import com.example.demotest.Entity.Users;
 import com.example.demotest.Enum.BasicSalary;
 import com.example.demotest.Enum.Job;
@@ -13,9 +16,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletResponse;
 
 
 import io.micrometer.core.instrument.util.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +28,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -33,7 +40,9 @@ import java.util.*;
 public class UsersService {
     @Autowired
     private UsersDao userDao;
-
+    // 依赖注入加密接口
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Users findByUsername(String username) {
         return userDao.findByUsername(username).get();
@@ -57,11 +66,21 @@ public class UsersService {
         user.setEid(userDao.getMaxEiD()+1);
         user.setId(SequenceUtils.nextId()); //雪花算法ID生成
         user.setPassword("$2a$10$36A/etwTPl2PscyArcEpzeAyvhC3cd1IJZYMXv27jIp67j0BOOpJa");
+//        user.setRole();
         user.setJoinTime(new Date());
         user.setIsWork(Boolean.TRUE);
         userDao.save(user);
+        userDao.setUserRole(user.getId());
+        System.out.println("user.getId()"+user.getId());
     };
-
+    /**
+     * 修改密码 需要事务支持
+     */
+    @Modifying
+    @Transactional
+    public void   updatePassword(Long id,String password) {
+            userDao.updatePassword(id,passwordEncoder.encode(password));
+    };
     /**
      * 修改员工 需要事务支持
      * @param user
@@ -72,9 +91,11 @@ public class UsersService {
         if(!user.getIsWork()&&user.getLeaveTime()==null){
             user.setLeaveTime(new Date());
             userDao.save(user);
+            userDao.setUserRole(user.getId());
         }else {
             user.setLeaveTime(null);
             userDao.save(user);
+            userDao.setUserRole(user.getId());
         }
 
     };
@@ -206,6 +227,47 @@ public class UsersService {
     public Set<String> findUsernameByUsernameLike(String username){
         return userDao.findUsernameByUsernameLike(username);
     }
+
+    public void downExcel(HttpServletResponse response){
+        List<Users> list = getAllUser();
+
+        //指定列表标题和工作表名称
+        ExportParams params = new ExportParams("职员信息表","职员");
+        Workbook workbook = ExcelExportUtil.exportExcel(params,Users.class,list);
+        response.setHeader("content-Type","application/vnd.ms-excel");
+         final String fileOthername="职员信息表";
+        response.setHeader("Content-Disposition","attachment;filename="+System.currentTimeMillis()+fileOthername+".xls");
+        response.setCharacterEncoding("UTF-8");
+        try {;
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<Users> getAllUser(){
+        return userDao.findAll();
+    }
+
+
+    public void downExcelByIds(HttpServletResponse response,List list){
+        //指定列表标题和工作表名称
+        ExportParams params = new ExportParams("职员信息表","职员");
+        Workbook workbook = ExcelExportUtil.exportExcel(params,Users.class,list);
+        response.setHeader("content-Type","application/vnd.ms-excel");
+        final String fileOthername="职员信息表";
+        response.setHeader("Content-Disposition","attachment;filename="+System.currentTimeMillis()+fileOthername+".xls");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

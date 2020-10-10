@@ -2,25 +2,31 @@ package com.example.demotest.Controller;
 
 
 import ch.qos.logback.classic.LoggerContext;
+
 import com.example.demotest.Entity.Users;
 import com.example.demotest.Service.UsersService;
 import com.example.demotest.core.Result;
+
 import com.example.demotest.util.ConvertUtil;
 import com.example.demotest.util.PageData;
 import com.example.demotest.util.redis.RedisKeyUtil;
 import io.micrometer.core.instrument.util.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import java.util.*;
 
 @CrossOrigin   //跨域
 @Controller
@@ -31,7 +37,45 @@ public class UserController {
     @Autowired
     RedisKeyUtil redisKeyUtilss;
 
+//    @Autowired
+
     private final Logger log= LoggerFactory.getLogger(LoggerContext.class);
+
+    @RequestMapping(value="/home")
+    public String indexR(Users users, Model model, HttpSession session) {
+
+        String forword="user/home";
+        String updatePassword="user/password";
+        users=usersService.findByUsername(this.getUsername());
+        session.setAttribute("user", users);
+        if (users.getPassword().equals("$2a$10$36A/etwTPl2PscyArcEpzeAyvhC3cd1IJZYMXv27jIp67j0BOOpJa")){
+            return updatePassword;
+        }else {
+            return forword;
+        }
+    }
+
+    @RequestMapping(value = "/updatePassword")
+    @ResponseBody
+    public ResponseEntity<?> updatePassword(@RequestBody Users users) {
+        Result result =new Result();
+        log.info("id:"+users.getId(),"passsord:"+users.getPassword());
+        if (!Objects.isNull(users)){
+            usersService.updatePassword(users.getId(),users.getPassword());
+            result.setCode(200);
+            result.setMsg("OK");
+            result.setData(null);
+            log.info("密码修改成功");
+            return ResponseEntity.ok(result);
+        } else {
+            result.setCode(500);
+            result.setMsg("FALSE");
+            log.error("密码修改失败,返回值为"+result);
+            return ResponseEntity.ok(result);
+        }
+
+    }
+
 
     /**
      * 用户管理界面
@@ -148,11 +192,19 @@ public class UserController {
     public  ResponseEntity<?>  userUpdate(Users users) {
         Result result = new Result();
         if(users.getId() != null){
-            usersService.updateUser(users);
-            result.setCode(200);
-            result.setMsg("OK");
-            log.info("操作成功,更新的职员id为"+users.getId());
-            return ResponseEntity.ok(result);
+            try {
+                usersService.updateUser(users);
+                result.setCode(200);
+                result.setMsg("OK");
+                log.info("操作成功,更新的职员id为"+users.getId());
+                return ResponseEntity.ok(result);
+            }catch (Exception e){
+                result.setCode(500);
+                result.setMsg("异常导致操作失败");
+                log.error("异常导致操作失败"+users);
+                return   ResponseEntity.ok(result);
+            }
+
        } else {
             result.setCode(500);
             result.setMsg("FALSE");
@@ -170,16 +222,16 @@ public class UserController {
     @ResponseBody
     public ResponseEntity deleteByIds(String ids) {
         Result result = new Result();
+        log.info("数组下表越界测试ids"+ids);
         if (ids.contains(",")) {
             List lists = ConvertUtil.string2List(ids, ",");
+            log.info("数组下表越界测试lists"+lists);
             try {
                 //批量删除
-                if (lists != null && lists.size() >= 1) {
-                    log.info("批量删除开始 测试第一个数据ConvertUtil--" + ConvertUtil.stringToLong(lists.get(1).toString()));
-                    for (int i = 0; i < lists.size(); i++) {
-                        usersService.delete(ConvertUtil.stringToLong(lists.get(i).toString()));
-                    }
-                }
+                    log.info("批量删除开始 测试第一个数据ConvertUtil--" + ConvertUtil.stringToLong(lists.get(0).toString()));
+                        for (int i = 0; i < lists.size(); i++) {
+                            usersService.delete(ConvertUtil.stringToLong(lists.get(i).toString()));
+                        }
             } catch (Exception e) {
                 result.setCode(500);
                 result.setMsg("FALSE");
@@ -191,11 +243,9 @@ public class UserController {
             log.info("批量删除成功,ids为"+lists);
             return ResponseEntity.ok(result);
         }else {
-            List lists = ConvertUtil.array2List(ids);
-            usersService.delete(ConvertUtil.stringToLong(lists.get(0).toString()));
             result.setCode(200);
             result.setMsg("OK");
-            log.info("批量删除失败，进入单个删除,id为"+lists);
+            log.info("批量删除失败");
             return  ResponseEntity.ok(result);
         }
     }
@@ -219,5 +269,50 @@ public class UserController {
             return   ResponseEntity.ok(result);
         }
     }
+    /**
+     * 全部导出
+     * @return
+     */
+    @RequestMapping(value = "/exportUserInfoExcel")
+    @ResponseBody
+    public  void exportUserInfoExcel(HttpServletResponse response){
+             usersService.downExcel(response);
+             log.info("导出成功");
+    }
+    /**
+     * 批量导出
+     * @return
+     */
+    @RequestMapping(value = "/exportByIds.action")
+    @ResponseBody
+    public void exportByIds(HttpServletRequest request,HttpServletResponse response,@RequestParam(name = "ids") String ids) {
+        log.info("ids"+ids);
+        if (ids.contains(",")) {
+            List lists = ConvertUtil.string2List(ids, ",");
+            try {
+                if (lists != null && lists.size() >= 1) {
+                    List list =new ArrayList();
+                    log.info("批量导出开始 测试第一个数据ConvertUtil--" + ConvertUtil.stringToLong(lists.get(0).toString()));
+                    for (int i = 0; i < lists.size(); i++) {
+                        list.add(usersService.findById(ConvertUtil.stringToLong(lists.get(i).toString())));
+                    }
+                    usersService.downExcelByIds(response,list);
+                }
+            } catch (Exception e) {
+                log.error("批量导出操作失败+"+e);
+            }
+            log.info("批量导出成功,ids为"+lists);
+        }else {
+            log.info("批量导出失败");
+        }
+    }
 
+    /**
+     * 根据id查询客户详情
+     */
+    private String getUsername(){
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info("username = " + id);
+        return id;
+    }
 }

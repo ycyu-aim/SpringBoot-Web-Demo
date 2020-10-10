@@ -82,60 +82,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 </head>
 <body>
-	<div class="left">
-		<div id="app">
-			<span class="badge">在职人数：</span><span class="badge">${longTotal}人</span>
-			<span class="badge">近期入职：${joinCount}人</span>
-			<span class="badge">近期辞职：${leaveCount}人</span>
-		</div>
-	</div>
 
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>各职业分布</h5>
-					</div>
-					<div class="ibox-content">
-						<div class="echarts" style="height: 430px" id="echarts-pie-chart"></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h4>
-							<i class="fa fa-leaf"></i> <span class="badge" style="color: yellow">工资分布情况</span>
-						</h4>
-					</div>
-					<div class="ibox-content" style="padding-top: 0px;">
-						<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-						<div id="echarts-bar-chart" style="height: 430px;">
-					</div>
-				</div>
-			</div>
-		</div>
-<%--脚部下面开始--%>
-		<div class="col-sm-12">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="ibox float-e-margins">
-						<div class="ibox-title">
-							<h5 align="center">
-								<i class="fas fa-paper-plane"></i> <span class="badge" style="color:whitesmoke" >年度出入职情况分析</span>
-							</h5>
-						</div>
-						<div class="ibox-content">
-							<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-							<div id="echarts-line-chart" style="width: 1000px;height:300px;">
-						</div>
-					</div>
-				</div>
-               <br><br><br>
-			</div>
-		</div>
-	</div>
+
+
 
 	<footer th:replace="dashboard/footer :: footer"></footer>
 

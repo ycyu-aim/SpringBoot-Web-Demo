@@ -24,8 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h3 class="panel-title">AccessDenied页面</h3>
 		</div>
 </div>
-	<h3><font color="red"><span th:text="${user}"></span></font>, 您没有权限访问页面!
-	您的权限是<font color="red"><span th:text="${role}">权限</span></font><br/><br/>
-	<a href="logout">安全退出</a></h3>
+	<h3><span style="color: red; "></span> 您没有权限访问页面!
+	<a href="<%=basePath%>logout">安全退出</a></h3>
 </body>
 </html>

@@ -53,7 +53,7 @@ public class AppAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
         // 判断不同角色跳转到不同的url
         if (isUser(roles)) {
-            url = "/user/indexR";
+            url = "/user/home";
         } else if (isAdmin(roles)) {
             url = "/admin/indexA";
         }else {

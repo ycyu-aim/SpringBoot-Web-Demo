@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">简单Spring Boot Security示例</h3>
+			<h3 class="panel-title" align="center">简单Spring Boot 示例</h3>
 		</div>
 </div>
 <div id="mainWrapper">

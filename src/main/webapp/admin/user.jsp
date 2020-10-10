@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<script type="text/javascript" src="<%=basePath%>js/js113.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/materialize.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/materialize.min.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
@@ -85,6 +85,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.autoComplete li {list-style:none;}
 		.autoComplete li a {display:block;color:#000;text-decoration:none;padding:1px 0 1px 5px;_width:97%;}
 		.autoComplete li a:hover {color:#000;background:#ccc;border:none;}
+
+		/**
+ * 隐藏默认的checkbox
+ */
+		/*input[type=checkbox] {*/
+		/*	visibility: hidden;*/
+		/*}*/
+
 	</style>
 
 	<script type="text/javascript">
@@ -334,7 +342,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         $i.remove();
                     });
             });
+
         });
+
     </script>
 <title>Insert title here</title>
 </head>
@@ -398,6 +408,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</form>
 				<form class="form-inline"  onsubmit="return false">
                     <a class="btn-floating btn-large waves-effect waves-light blue"  type="button"  data-toggle="modal" data-target="#myModal">ADD<i class="material-icons">add</i></a>
+                    <a href="#" class="btn waves-effect waves-light green" onclick="exportUserInfoExcel()">全部导出</a>
+                    <a href="#" class="btn waves-effect waves-light 1de9b6 teal accent-3" onclick="exportById()">批量导出</a>
+<%--					<a class="btn waves-effect waves-light green" href="<%=basePath%>user/exportUserInfoExcel"  type="button"  >全部导出Excel表格<i class="material-icons">add</i></a>--%>
+
 				</form>
 			</div>
 		</div>
@@ -424,7 +438,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th><i class="small material-icons">supervisor_account</i>职位</th>
 								<th><i class="small material-icons">phone</i>手机号码</th>
 								<th><i class="small material-icons">assignment_late</i>是否在职</th>
-								<th><a href="#" class="btn waves-effect waves-light red" onclick="deleteAll()">批量删除</a></th>
+								<th><a href="#" class="btn waves-effect waves-light ef6c00 orange darken-3" onclick="deleteAll()">批量删除</a></th>
 							</tr>
 						</thead>
 						<tbody id="questionlist">
@@ -432,8 +446,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<c:forEach var="user" items="${page.rows}" varStatus="status" >
 								<tr class="aa" draggable="true">
 									<td>
-										<input type="checkbox" class="i-checks" name="idone" id="idone" value="${user.id}" >
-										<label for="idone"></label>
+										<input type="checkbox"  id="${user.id}" name="idone"  value="${user.id}" >
+										<label for="${user.id}"></label>
 									</td>
 									<td>
 										<c:out value="${user.eid }"/>
@@ -494,7 +508,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class=".input-field col s6">
 							<label for="add_phone">tel：</label>
                             <i class="material-icons prefix"></i>
-                            <input id="add_phone" type="tel" placeholder="电话 tel"  class="validate" required>
+                            <input id="add_phone" type="tel" placeholder="电话 tel"  maxlength="11" class="validate" required>
 
                         </div>
                     </div>
@@ -527,7 +541,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="row">
                         <div class="input-field col s6">
 							<label  for="add_idcard">身份证号码:</label>
-                            <input id="add_idcard" type="text" placeholder="身份证号码 idcard" class="validate" >
+                            <input id="add_idcard" type="text" placeholder="身份证号码 idcard" maxlength="18" class="validate" >
 
                         </div>
                         <div class="input-field col s6">
@@ -540,7 +554,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </form>
             </div>
 			<div class="card-panel">
-				<h5>Primary Buttons</h5>
+<%--				<h5>Primary Buttons</h5>--%>
 				<button id="buttonAdd" class="btn waves-effect waves-light red"  onclick="addUser()">确认<i class="material-icons right">send</i></button>
                 <button type="button" class="btn waves-effect waves-light yellow " data-dismiss="modal">关闭<i class="material-icons right">cancel</i></button>
 <%--				<button class="btn waves-effect waves-light red disabled" data-dismiss="modal" >Cancel<i class="material-icons right">cancel</i></button>--%>
@@ -576,7 +590,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class=".input-field col s6">
 						<label for="edit_phone">tel：</label>
 						<i class="material-icons prefix"></i>
-						<input id="edit_phone" type="tel" placeholder="电话 tel" name="phone" class="validate" required>
+						<input id="edit_phone" type="tel" placeholder="电话 tel" name="phone" maxlength="11" class="validate" required>
 
 					</div>
 				</div>
@@ -624,7 +638,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row">
 					<div class=".input-field col s3">
 						<label  for="edit_idCard">身份证号码:</label>
-						<input id="edit_idCard" name="idcard" type="text" placeholder="身份证号码 idcard" class="validate" >
+						<input id="edit_idCard" name="idcard" type="text" placeholder="身份证号码 idcard" maxlength="18" class="validate" >
 
 					</div>
 					<div class=".input-field col s6">
@@ -639,7 +653,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 		<div class="card-panel">
-			<h5>Primary Buttons</h5>
+<%--			<h5>Primary Buttons</h5>--%>
 			<button class="btn waves-effect waves-light red"  onclick="updateUser()">修改<i class="material-icons right">send</i></button>
 			<button type="button" class="btn waves-effect waves-light yellow " data-dismiss="modal">关闭<i class="material-icons right">cancel</i></button>
 
@@ -666,20 +680,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			oid[i].checked=oall.checked;
 		}
 	};
-	//点击复选框
-	// for(var i=0;i<oid.length;i++){
-	// 	oid[i].onclick=function(){
-	// 		//判断是否全部选中,遍历集合
-	// 		for(var j=0;j<oid.length;j++){
-	// 			if(oid[j].checked==false){
-	// 				oall.checked=false;
-	// 				break;
-	// 			}else{
-	// 				oall.checked=true;
-	// 			}
-	// 		}
-	// 	};
-	// }
+
 </script>
 <script type="text/javascript">
 	function deleteAll() {
@@ -713,6 +714,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 		}
 	}
+
+
+
 
 </script>
 <script type="text/javascript" >
@@ -798,7 +802,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#edit_joinTime").val(data.joinTime);
 				$("#edit_leaveTime").val(data.leaveTime);
 				$("#edit_address").val(data.address);
-
 
 				if (data.sex===("女")) {
 					$("input[id=sexW][value='女']").attr("checked",true);//value=34的radio被选中
@@ -886,7 +889,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 
 
+    function exportUserInfoExcel(){
+        layer.confirm('确定全部导出吗！', {icon: 7, title: '确认'}, function (index) {
 
+            layer.msg("正在导出", {icon: 1, time: 2000},function (index){
+                window.location.href = "<%=basePath%>user/exportUserInfoExcel";
+                                    layer.close();
+                                });
+        });
+    }
+
+    function exportById() {
+        var idss = '';
+        $('input:checkbox[name="idone"]').each(function () {
+            if (this.checked === true) {
+                idss += this.value + ',';
+            }
+        });
+        var ids=idss;
+        console.log(ids);
+        if (!idss){
+            layer.msg('请至少选中一个', {icon: 2, time: 1500});
+            return false;
+        } else {
+            layer.confirm('确定将选中的数据导出吗！', {icon: 7, title: '确认'}, function (index) {
+				layer.msg("正在导出", {icon: 1, time: 2000},function (index){
+					window.location.href = "<%=basePath%>user/exportByIds.action?ids="+ ids;
+					layer.close();
+				});
+
+            });
+        }
+    }
 </script>
 
 </html>

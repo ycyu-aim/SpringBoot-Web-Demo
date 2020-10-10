@@ -8,8 +8,6 @@ public enum Job {
     PRODUCTMANAGER("产品经理"),
     PROJECTMANAGER("项目经理"),
     HR("HR");
-
-
     private String code;
      Job(String code ) {
         this.code= code;

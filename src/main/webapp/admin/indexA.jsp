@@ -1,4 +1,8 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java"  import="java.util.*" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="navigationTag" uri="http://navigationTag.com/common/"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -75,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="background">
 						<img src="<%=basePath%>img/back.jpg">
 					</div>
-					<a ><img class="circle" src="<%=basePath%>img/myGril.jpg"></a>
+					<a ><img class="circle" src="<%=basePath%>img/myBoy.jpg"></a>
 					<a ><span class="white-text name">Hello admin: ${admin.username}</span></a>
 					<a ><span class="white-text email">765341731@qq.com</span></a>
 				</div></li>
@@ -98,7 +102,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 
 	</div>
-
 			<footer class="page-footer">
 				<div class="container">
 					<div class="row">
