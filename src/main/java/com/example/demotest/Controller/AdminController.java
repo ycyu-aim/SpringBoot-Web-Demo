@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin
@@ -36,6 +38,9 @@ public class AdminController {
     private UsersService usersService;
     @Autowired
     RedisKeyUtil redisKeyUtilss;
+
+    // inject the actual template
+
 
 
 
@@ -109,6 +114,7 @@ public class AdminController {
     @RequestMapping("/getBar1")
     public ResponseEntity<?> getBar(){
         if (StringUtils.isNotEmpty(redisKeyUtilss.getString("getBar1"))){
+            //        取  去掉首位跟末尾 [] 在按 ", " 截取 后 List<String> to List<Long>
             List lists = ConvertUtil.string2List(redisKeyUtilss.getString("getBar1").substring(1,11), ", ");
 
             List list2 = new ArrayList();
