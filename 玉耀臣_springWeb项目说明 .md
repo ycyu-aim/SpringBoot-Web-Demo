@@ -2,13 +2,19 @@
 
 2. 项目起止时间2020.9.29-2020.10.9
 
-2. Git地址：https://github.com/yyc19980227/SpringBoot-Web-Demo.git
+2. Git地址：
 
-3. **项目主题**：人事管理
+3. **项目主题**：微人事管理
 
-4. **需求分析**：该系统主要由管理员处理对员工数据增删查改，以及对这些数据的分析由前端页面柱形图、饼图、折线图直观分析结果，所以数据库设计应该为角色表，管理员账号表，角色权限表 ，员工表
+5. ### 账号：
 
-5. **技术选型**：敏捷型开发选择**Spring boot**框架，SpringBoot是为了简化Spring应用的创建、运行、调试、部署等而出现的，使用它可以做到专注于Spring应用的开发，而无需过多关注XML的配置，简单来说，springboo提供了一堆依赖打包，并且已经按照习惯解决了依赖问题；
+   ##### 管理员账号：**username：1 password： 1**
+
+   ##### 普通用户：**username：职员姓名    password：默认为 1**
+
+6. **需求分析**：该系统主要由管理员处理对员工数据增删查改，以及对这些数据的分析由前端页面柱形图、饼图、折线图直观分析结果，所以数据库设计应该为角色表，管理员账号表，角色权限表 ，员工表
+
+7. **技术选型**：敏捷型开发选择**Spring boot**框架，SpringBoot是为了简化Spring应用的创建、运行、调试、部署等而出现的，使用它可以做到专注于Spring应用的开发，而无需过多关注XML的配置，简单来说，springboo提供了一堆依赖打包，并且已经按照习惯解决了依赖问题；
 
    SpringBoot默认使用tomcat作为服务器，使用logback提供日志记录；
 
@@ -44,15 +50,15 @@
 
    
 
-6. **详细说明**：该项目主要是为人事管理企业员工，主要提供了对员工的CURD以及对员工近期一月入职、离职、总在职人数统计、工资范围分析、当年十二个月的人员变动分析。其中集成了Spring Security权限验证，现在开发后台功能主要为管理员权限所用，若开发员工权限页面只需要在数据库增加员工权限即可。
+8. **详细说明**：该项目主要是为人事管理企业员工，主要提供了对员工的CURD以及对员工近期一月入职、离职、总在职人数统计、工资范围分析、当年十二个月的人员变动分析。其中集成了Spring Security权限验证，现在开发后台功能主要为管理员权限所用，若开发员工权限页面只需要在数据库增加员工权限即可。
 
-7. ## 从零搭建Demo
+9. ## 从零搭建Demo
 
-8. 开发环境为Windows10系统
+10. 开发环境为Windows10系统
 
-9. 选择IntelliJ IDEA 2019.3.5 x64版本  https://www.jetbrains.com/idea/download/other.html
+11. 选择IntelliJ IDEA 2019.3.5 x64版本  https://www.jetbrains.com/idea/download/other.html
 
-10. 先去下载一个Maven3.5  https://archive.apache.org/dist/maven/maven-3/3.5.0/source/ 下载，下载完成后解压到本地C盘即可，修改maven配置文件，找到conf文件中settings.xml打开
+12. 先去下载一个Maven3.5  https://archive.apache.org/dist/maven/maven-3/3.5.0/source/ 下载，下载完成后解压到本地C盘即可，修改maven配置文件，找到conf文件中settings.xml打开
 
     ```
      <localRepository>C:/apache-maven-3.5.0/repository</localRepository>
@@ -74,15 +80,15 @@
 
     在mirrors中使用阿里云的镜像，相比于原仓库来说，在国内下载依赖速度飞快，如果不配置这个而是用IDEA的默认maven时  maven打包速度太慢
 
-11. 再去下载一个jdk1.8.0_191 版本为1.8以上即可
+13. 再去下载一个jdk1.8.0_191 版本为1.8以上即可
 
-12. 下载 Redis window版本 百度网盘下载地址 https://pan.baidu.com/s/1z1_OdNVbtgyEjiktqgB83g 密码：kdfq   解压完成后打开cmd指令窗口
+14. 下载 Redis window版本 百度网盘下载地址 https://pan.baidu.com/s/1z1_OdNVbtgyEjiktqgB83g 密码：kdfq   解压完成后打开cmd指令窗口
     3.输入你刚才解压的文件路径
     4.然后输入redis-server redis.windows.conf 命令 5随后,进入右击此电脑–管理–服务和应用程序–服务 启动服务Redis
 
-13. oracle数据库按照百度经验进行下载安装即可
+15. oracle数据库按照百度经验进行下载安装即可
 
-14. 开发环境跟开发工具都已准备好可以打开IDEA
+16. 开发环境跟开发工具都已准备好可以打开IDEA
 
     打开左上角的file---选择Settings先去配置maven环境![0Dwdkd.png](https://s1.ax1x.com/2020/10/09/0Dwdkd.png)
 
@@ -2938,5 +2944,5 @@ $.get("<%=basePath%>admin/getPie1", function(data) {
 
 总仪盘表页面![0DDjhj.gif](https://s1.ax1x.com/2020/10/09/0DDjhj.gif)
 
-
+[]()
 
