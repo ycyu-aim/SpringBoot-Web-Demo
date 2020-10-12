@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						<div class="ibox-content">
 							<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-							<div id="echarts-line-chart" style="width: 1000px;height:300px;">
+							<div id="echarts-line-chart" style="width: 1500px;height:300px;">
 							</div>
 						</div>
 					</div>

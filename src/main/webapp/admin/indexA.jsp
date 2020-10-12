@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<nav>
 				<div class="nav-wrapper">
-					<a href="<%=basePath%>admin/indexA" class="brand-logo center">Web Demo</a>
+					<a href="<%=basePath%>admin/indexA" class="brand-logo center">微人事</a>
 					<ul id="nav-mobile" class="right hide-on-med-and-down">
 						<li><button class="btn waves-effect waves-light black" onclick="logout()"/>注销</li>
 					</ul>
@@ -119,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<div class="footer-copyright">
 					<div class="container">
-						© 2020 Materialize, All rights reserved.
+						© 2020 桂ICP备19012427号, All rights reserved.
 					</div>
 				</div>
 			</footer>

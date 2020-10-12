@@ -7,7 +7,8 @@ import com.example.demotest.Service.AdminService;
 import com.example.demotest.Service.UsersService;
 import com.example.demotest.util.ConvertUtil;
 import com.example.demotest.util.redis.RedisKeyUtil;
-import io.micrometer.core.instrument.util.StringUtils;
+//import io.micrometer.core.instrument.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 
-@CrossOrigin
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -38,10 +38,6 @@ public class AdminController {
     private UsersService usersService;
     @Autowired
     RedisKeyUtil redisKeyUtilss;
-
-    // inject the actual template
-
-
 
 
     private final Logger log= LoggerFactory.getLogger(LoggerContext.class);
@@ -163,10 +159,17 @@ public class AdminController {
              List joinCount = new ArrayList();
              List leaveCount = new ArrayList();
              final String  mm= "月";
+//             oracle
              for (Map<String, Object> map:mapList){
                  moutn.add(map.get("timeDateMM")+mm);
                  joinCount.add(map.get("INScanCount"));
              }
+//             mysql
+//             for (Map<String, Object> map:mapList){
+//                 moutn.add(map.get("month")+mm);
+//                 joinCount.add(map.get("INScanCount"));
+//             }
+
              for (Map<String, Object> map1:mapList){
                  leaveCount.add(map1.get("OutScanCount"));
              }

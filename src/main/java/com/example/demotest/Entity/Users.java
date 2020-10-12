@@ -62,7 +62,7 @@ public class Users implements Serializable{
 
     @ManyToOne( fetch=FetchType.EAGER,
             targetEntity=Role.class)
-    @JoinColumn(name="rid",referencedColumnName="id",columnDefinition = "long default 2")
+    @JoinColumn(name="rid",referencedColumnName="id")
     private Role role;
 
     @ManyToOne( fetch=FetchType.EAGER,

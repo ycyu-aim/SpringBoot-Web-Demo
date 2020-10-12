@@ -22,9 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="<%=basePath%>js/materialize.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/materialize.min.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+	<script type="text/javascript" src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+	<script type="text/javascript" src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 
 
 
@@ -465,7 +465,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<c:out value="${user.phone }"/>
 									</td>
 									<td>
-										<c:out value="${user.isWork }"/>
+<%--										<c:out value="${user.isWork }"/>--%>
+										<c:if test="${user.isWork== true }">
+											<c:out value="在职"/>
+										</c:if>
+										<c:if test="${user.isWork!= true }">
+											<c:out value="离职"/>
+										</c:if>
 									</td>
 
 									<td>

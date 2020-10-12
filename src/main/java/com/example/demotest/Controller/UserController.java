@@ -100,7 +100,7 @@ public class UserController {
         model.addAttribute("username",user.getUsername());
         model.addAttribute("eid",user.getEid());
         model.addAttribute("page",pageData);
-        log.info("测试分页 查询出Content"+pageS.getContent() +"测试model数据"+model);
+        log.info("测试分页 查询出Content"+ "测试model数据");
         return "admin/user";
     }
 
@@ -159,12 +159,19 @@ public class UserController {
             result.setMsg("FALSE");
             log.error("添加失败,返回值为"+result);
             return ResponseEntity.ok(result);
-        }
+        } try {
             result.setCode(200);
             result.setMsg("OK");
-        usersService.saveUser(users);
-        log.info("添加成功"+users);
-        return ResponseEntity.ok(result);
+            usersService.saveUser(users);
+            log.info("添加成功"+users);
+            return ResponseEntity.ok(result);
+        }catch (Exception e){
+            result.setCode(500);
+            result.setMsg("FALSE");
+            log.error("添加失败,返回值为"+result);
+            return ResponseEntity.ok(result);
+        }
+
     }
 
     /**
@@ -207,8 +214,8 @@ public class UserController {
 
        } else {
             result.setCode(500);
-            result.setMsg("FALSE");
-            log.error("操作失败"+result);
+            result.setMsg("表单存在NULL");
+            log.error("操作失败表单存在NULL"+result);
             return   ResponseEntity.ok(result);
         }
     }
@@ -257,15 +264,22 @@ public class UserController {
     public ResponseEntity<?> userDelete(Long id) {
         Result result = new Result();
         if(id != null ){ //success return
-            usersService.delete(id);
-            result.setCode(200);
-            result.setMsg("OK");
-            log.info("删除成功,id为"+id);
-            return  ResponseEntity.ok(result);
+            try {
+                usersService.delete(id);
+                result.setCode(200);
+                result.setMsg("OK");
+                log.info("删除成功,id为"+id);
+                return  ResponseEntity.ok(result);
+            }catch (Exception e){
+                result.setCode(500);
+                result.setMsg("FALSE Exception");
+                log.error("删除失败,id为"+id);
+                return   ResponseEntity.ok(result);
+            }
         } else{  //false return
             result.setCode(500);
-            result.setMsg("FALSE");
-            log.error("删除失败,id为"+id);
+            result.setMsg("ID is Null");
+            log.error("删除失败,id为Null");
             return   ResponseEntity.ok(result);
         }
     }
