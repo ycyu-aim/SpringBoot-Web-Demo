@@ -1,102 +1,106 @@
 开发人员：玉耀臣
 
-2. 项目起止时间2020.9.29-2020.10.9
 
-2. Git地址：
 
-3. **项目主题**：微人事管理
+Git地址：https://github.com/yyc19980227/SpringBoot-Web-Demo.git
 
-5. ### 账号：
+在线体验系统：http://101.201.237.88:8081/   在线系统的数据库为MySQL数据库，本地的是Oracle数据库
 
-   ##### 管理员账号：**username：1 password： 1**
+**项目主题**：微人事管理
 
-   ##### 普通用户：**username：职员姓名    password：默认为 1**
+### 账号：
 
-6. **需求分析**：该系统主要由管理员处理对员工数据增删查改，以及对这些数据的分析由前端页面柱形图、饼图、折线图直观分析结果，所以数据库设计应该为角色表，管理员账号表，角色权限表 ，员工表
+##### 管理员账号：**username：1 password： 1**
 
-7. **技术选型**：敏捷型开发选择**Spring boot**框架，SpringBoot是为了简化Spring应用的创建、运行、调试、部署等而出现的，使用它可以做到专注于Spring应用的开发，而无需过多关注XML的配置，简单来说，springboo提供了一堆依赖打包，并且已经按照习惯解决了依赖问题；
+##### 普通用户：**username：职员姓名    password：默认为 1**
 
-   SpringBoot默认使用tomcat作为服务器，使用logback提供日志记录；
+例如 账号：坤坤二号 密码：222
 
-   SpringBoot提供了一系列的依赖包，所以需要构建工具的支持，maven或者gradle；
+**需求分析**：该系统主要由管理员处理对员工数据增删查改，以及对这些数据的分析由前端页面柱形图、饼图、折线图直观分析结果，所以数据库设计应该为角色表，管理员账号表，角色权限表 ，员工表
 
-   分析得出本系统功能逻辑一般，没有太多复杂的SQL语句，所以选择Spring data JPA。
+**技术选型**：敏捷型开发选择**Spring boot**框架，SpringBoot是为了简化Spring应用的创建、运行、调试、部署等而出现的，使用它可以做到专注于Spring应用的开发，而无需过多关注XML的配置，简单来说，springboo提供了一堆依赖打包，并且已经按照习惯解决了依赖问题；
 
-   **JPA**的出现主要是为了简化持久层开发以及整合ORM技术，结束Hibernate、TopLink、JDO等ORM框架各自为营的局面。JPA是在吸收现有ORM框架的基础上发展而来，易于使用，伸缩性强。总的来说，JPA包括以下3方面的技术：
+SpringBoot默认使用tomcat作为服务器，使用logback提供日志记录；
 
-   - **ORM映射元数据**： 支持XML和注解两种元数据的形式，元数据描述对象和表之间的映射关系
+SpringBoot提供了一系列的依赖包，所以需要构建工具的支持，maven或者gradle；
 
-   - **API**： 操作实体对象来执行CRUD操作
+分析得出本系统功能逻辑一般，没有太多复杂的SQL语句，所以选择Spring data JPA。
 
-   - **查询语言**： 通过面向对象而非面向数据库的查询语言（`JPQL`）查询数据，避免程序的SQL语句紧密耦合
+**JPA**的出现主要是为了简化持久层开发以及整合ORM技术，结束Hibernate、TopLink、JDO等ORM框架各自为营的局面。JPA是在吸收现有ORM框架的基础上发展而来，易于使用，伸缩性强。总的来说，JPA包括以下3方面的技术：
 
-     
+- **ORM映射元数据**： 支持XML和注解两种元数据的形式，元数据描述对象和表之间的映射关系
 
-   使用jpa我们可以在做一般的增删查改中可以直接使用JpaRepository中提供的方法，只需要在Service或Controller中调用即可，对于复杂的SQL操作可以选择自定义查询Using @Query或者原生查询Native Queries，原生查询为直接使用当前SQL语言。
+- **API**： 操作实体对象来执行CRUD操作
 
-   由于决定使用JPA，所以对于选择关系型数据库来说可以选择自己熟悉的，在这里主要使用**Oracle**。
+- **查询语言**： 通过面向对象而非面向数据库的查询语言（`JPQL`）查询数据，避免程序的SQL语句紧密耦合
 
-   为了降低数据库压力选择**Redis**作为数据缓存。
+  
 
-   作为MVC架构的经典选择了**JSP**作为前端。
+使用jpa我们可以在做一般的增删查改中可以直接使用JpaRepository中提供的方法，只需要在Service或Controller中调用即可，对于复杂的SQL操作可以选择自定义查询Using @Query或者原生查询Native Queries，原生查询为直接使用当前SQL语言。
 
-   前端使用的框架主要为**Jquery、Bootstrap、Materialize-UI、layui**，在页面交互中使用Bootstrap，布局和样式选择了Materialize-UI，layui只作为弹窗使用。
+由于决定使用JPA，所以对于选择关系型数据库来说可以选择自己熟悉的，在这里主要使用**Oracle**。
 
-   这样子的页面风格比较简约，可以直面主题；
+为了降低数据库压力选择**Redis**作为数据缓存。
 
-   系统安全选择Spring security做权限验证，可以做到对角色分配资源、页面控制器。
+作为MVC架构的经典选择了**JSP**作为前端。
 
-   分页选择NavigationTag对前端的分页排序  显示格式：首页 上一页 1 2 3 4 5下一页 尾页
+前端使用的框架主要为**Jquery、Bootstrap、Materialize-UI、layui**，在页面交互中使用Bootstrap，布局和样式选择了Materialize-UI，layui只作为弹窗使用。
 
-   
+这样子的页面风格比较简约，可以直面主题；
 
-8. **详细说明**：该项目主要是为人事管理企业员工，主要提供了对员工的CURD以及对员工近期一月入职、离职、总在职人数统计、工资范围分析、当年十二个月的人员变动分析。其中集成了Spring Security权限验证，现在开发后台功能主要为管理员权限所用，若开发员工权限页面只需要在数据库增加员工权限即可。
+系统安全选择Spring security做权限验证，可以做到对角色分配资源、页面控制器。
 
-9. ## 从零搭建Demo
+分页选择NavigationTag对前端的分页排序  显示格式：首页 上一页 1 2 3 4 5下一页 尾页
 
-10. 开发环境为Windows10系统
 
-11. 选择IntelliJ IDEA 2019.3.5 x64版本  https://www.jetbrains.com/idea/download/other.html
 
-12. 先去下载一个Maven3.5  https://archive.apache.org/dist/maven/maven-3/3.5.0/source/ 下载，下载完成后解压到本地C盘即可，修改maven配置文件，找到conf文件中settings.xml打开
+**详细说明**：该项目主要是为人事管理企业员工，主要提供了对员工的CURD以及对员工近期一月入职、离职、总在职人数统计、工资范围分析、当年十二个月的人员变动分析。其中集成了Spring Security权限验证，现在开发后台功能主要为管理员权限所用，若开发员工权限页面只需要在数据库增加员工权限即可。
 
-    ```
-     <localRepository>C:/apache-maven-3.5.0/repository</localRepository>
-    ```
+## 从零搭建Demo
 
-    这里改maven 本地仓库地址
+开发环境为Windows10系统
 
-    ```
-      <mirrors>
-     
-         <mirror>
-         	<id>nexus-aliyun</id>
-    		<name>Nexus aliyun</name>
-    		<url>http://maven.aliyun.com/nexus/content/groups/public/</url> 
-    		<mirrorOf>central</mirrorOf> 
-        </mirror>
-      </mirrors>
-    ```
+选择IntelliJ IDEA 2019.3.5 x64版本  https://www.jetbrains.com/idea/download/other.html
 
-    在mirrors中使用阿里云的镜像，相比于原仓库来说，在国内下载依赖速度飞快，如果不配置这个而是用IDEA的默认maven时  maven打包速度太慢
+先去下载一个Maven3.5  https://archive.apache.org/dist/maven/maven-3/3.5.0/source/ 下载，下载完成后解压到本地C盘即可，修改maven配置文件，找到conf文件中settings.xml打开
 
-13. 再去下载一个jdk1.8.0_191 版本为1.8以上即可
+```
+ <localRepository>C:/apache-maven-3.5.0/repository</localRepository>
+```
 
-14. 下载 Redis window版本 百度网盘下载地址 https://pan.baidu.com/s/1z1_OdNVbtgyEjiktqgB83g 密码：kdfq   解压完成后打开cmd指令窗口
-    3.输入你刚才解压的文件路径
-    4.然后输入redis-server redis.windows.conf 命令 5随后,进入右击此电脑–管理–服务和应用程序–服务 启动服务Redis
+这里改maven 本地仓库地址
 
-15. oracle数据库按照百度经验进行下载安装即可
+```
+  <mirrors>
+ 
+     <mirror>
+     	<id>nexus-aliyun</id>
+		<name>Nexus aliyun</name>
+		<url>http://maven.aliyun.com/nexus/content/groups/public/</url> 
+		<mirrorOf>central</mirrorOf> 
+    </mirror>
+  </mirrors>
+```
 
-16. 开发环境跟开发工具都已准备好可以打开IDEA
+在mirrors中使用阿里云的镜像，相比于原仓库来说，在国内下载依赖速度飞快，如果不配置这个而是用IDEA的默认maven时  maven打包速度太慢
 
-    打开左上角的file---选择Settings先去配置maven环境![0Dwdkd.png](https://s1.ax1x.com/2020/10/09/0Dwdkd.png)
+再去下载一个jdk1.8.0_191 版本为1.8以上即可
 
-    配置完成后按照图片新建项目
+下载 Redis window版本 百度网盘下载地址 https://pan.baidu.com/s/1z1_OdNVbtgyEjiktqgB83g 密码：kdfq   解压完成后打开cmd指令窗口
+3.输入你刚才解压的文件路径
+4.然后输入redis-server redis.windows.conf 命令 5随后,进入右击此电脑–管理–服务和应用程序–服务 启动服务Redis
 
-    ![0DdVVH.png](https://s1.ax1x.com/2020/10/09/0DdVVH.png)
+oracle数据库按照百度经验进行下载安装即可
 
-    
+开发环境跟开发工具都已准备好可以打开IDEA
+
+打开左上角的file---选择Settings先去配置maven环境![0Dwdkd.png](https://s1.ax1x.com/2020/10/09/0Dwdkd.png)
+
+配置完成后按照图片新建项目
+
+![0DdVVH.png](https://s1.ax1x.com/2020/10/09/0DdVVH.png)
+
+
 
 最终生成的项目结果如下![0DwVyT.png](https://s1.ax1x.com/2020/10/09/0DwVyT.png)
 
@@ -2944,5 +2948,23 @@ $.get("<%=basePath%>admin/getPie1", function(data) {
 
 总仪盘表页面![0DDjhj.gif](https://s1.ax1x.com/2020/10/09/0DDjhj.gif)
 
-[]()
+
+
+### 总结：趁着这次机会，将SpringBoot 2.x版本与SpringDataJpa跟Oracle数据库做了个整合，学习到了Oracle基本的使用和语法，SpringDataJpa是通过实体类来操控数据库表，以至数据库迁移性强，所以在线上版本中整合了MySQL，这次作业完成过程中也踩了一些坑，比较印象深刻的是SpringBoot集成JSP的项目要通过Maven打包成War包才能访问到JSP页面，Springboot最优搭档还是thymeleaf,但这次没有使用到。
+
+#### 系统主要完成功能：用户登录鉴权
+
+#### **管理员端：**
+
+#### 对职员分页查询，增删查改，批量删除，批量导出，全部导出，职业分布饼图分析，工资分布柱形图，近一年人事变动折线图分析。
+
+#### **用户端：**
+
+#### 修改密码，查看个人信息，修改个人信息，预览用户主页。
+
+最后附上体验地址：http://101.201.237.88:8081/ 
+
+管理员：账号 ：1 密码 ：1
+
+普通用户：账号：坤坤二号 密码：222
 
