@@ -131,7 +131,7 @@ public class UserController {
             result.setData(lists);
             log.info("redis中查询出符合条件的姓名为"+result.getData());
             return ResponseEntity.ok(lists);
-          }else {
+          }else if (redisKeyUtilss.getLock("KEY_getUsernameList_SQL_count")) {
               Set<String> set =  usersService.findUsernameByUsernameLike(username);
               redisKeyUtilss.addSet(username,set);redisKeyUtilss.expire(username,60*60);
               result.setCode(200);
@@ -139,7 +139,12 @@ public class UserController {
               result.setData(set);
               log.info("查询出符合条件的姓名为"+result.getData());
               return ResponseEntity.ok(set);
-          }
+          }else {
+            result.setCode(500);
+            result.setMsg("当前查询过多,暂缓2S");
+            log.error("查询失败,返回值为"+result);
+            return ResponseEntity.ok(result);
+        }
 
     }
 

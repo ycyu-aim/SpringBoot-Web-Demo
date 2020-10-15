@@ -203,30 +203,12 @@ public class AdminController {
     @RequestMapping("/getlineDB")
     public ResponseEntity<?> get每天请求访问记录的统计量(){
 
-//        if (StringUtils.isNotEmpty(redisKeyUtilss.getString("timeDateMM"))){
-//            //        取  去掉首位跟末尾 [] 在按 ", " 截取 后 List<String> to List<Long>
-//            List moutnRedis = ConvertUtil.string2List(redisKeyUtilss.getString("startTime")
-//                    .substring(redisKeyUtilss.getString("startTime").length()-redisKeyUtilss.getString("startTime").length()+1,
-//                            redisKeyUtilss.getString("startTime").length()-1), ", ");
-//            List getTimeRedis = ConvertUtil.string2List(redisKeyUtilss.getString("durationTimeGET")
-//                    .substring(redisKeyUtilss.getString("durationTimeGET").length()-redisKeyUtilss.getString("durationTimeGET").length()+1,
-//                            redisKeyUtilss.getString("durationTimeGET").length()-1), ", ");
-//            List postTimeRedis = ConvertUtil.string2List(redisKeyUtilss.getString("durationTimePOST")
-//                    .substring(redisKeyUtilss.getString("durationTimePOST").length()-redisKeyUtilss.getString("durationTimePOST").length()+1,
-//                            redisKeyUtilss.getString("durationTimePOST").length()-1), ", ");
-//            List dataList = new ArrayList();
-//            dataList.add(moutnRedis);
-//            dataList.add(getTimeRedis);
-//            dataList.add(postTimeRedis);
-//            log.info(" redis 每天请求访问记录的统计量  lineDB");
-//            return ResponseEntity.ok(dataList);
-//        }else {
-         final String httpGET = "GET";
-         final String httpPOST = "POST";
+            final String httpGET = "GET";
+            final String httpPOST = "POST";
             List<Map<String, Object>> mapListGET = logService.countByToday(httpGET);
-            log.info(">>>>>>>>>>>测试size{}<<<<<<<<<<<<"+mapListGET.size());
-            if (mapListGET.size()<1){
-                return  null;
+            log.info(">>>>>>>>>>>测试size{}<<<<<<<<<<<<" + mapListGET.size());
+            if (mapListGET.size() < 1) {
+                return null;
             }
             List<Map<String, Object>> mapListPOST = logService.countByToday(httpPOST);
         /*
@@ -236,29 +218,19 @@ public class AdminController {
             List getTime = new ArrayList();
             List postTime = new ArrayList();
 //             oracle
-            for (Map<String, Object> map:mapListGET){
+            for (Map<String, Object> map : mapListGET) {
                 moutn.add(map.get("startTime"));
                 getTime.add(map.get("durationTime"));
             }
-            for (Map<String, Object> map1:mapListPOST){
+            for (Map<String, Object> map1 : mapListPOST) {
                 postTime.add(map1.get("durationTime"));
             }
-//             mysql
-//             for (Map<String, Object> map:mapList){
-//                 moutn.add(map.get("month")+mm);
-//                 joinCount.add(map.get("INScanCount"));
-//             }
-//            redisKeyUtilss.setString("startTime",moutn.toString());redisKeyUtilss.expire("startTime",60*60);
-//            redisKeyUtilss.setString("durationTimeGET",getTime.toString());redisKeyUtilss.expire("durationTimeGET",60*60);
-//            redisKeyUtilss.setString("durationTimePOST",postTime.toString());redisKeyUtilss.expire("durationTimePOST",60*60);
             List dataList = new ArrayList();
             dataList.add(moutn);
             dataList.add(getTime);
             dataList.add(postTime);
             log.info(" 每天请求访问记录的统计量  lineDB");
             return ResponseEntity.ok(dataList);
-
-
     }
 
     /**

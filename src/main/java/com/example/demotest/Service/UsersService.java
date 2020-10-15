@@ -5,10 +5,9 @@ package com.example.demotest.Service;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.example.demotest.Dao.UsersDao;
-import com.example.demotest.Entity.Role;
 import com.example.demotest.Entity.Users;
-import com.example.demotest.Enum.BasicSalary;
-import com.example.demotest.Enum.Job;
+import com.example.demotest.Enum.BasicSalaryEnum;
+import com.example.demotest.Enum.JobEnum;
 
 import com.example.demotest.util.snowflakeId.SequenceUtils;
 
@@ -67,7 +66,6 @@ public class UsersService {
         user.setEid(userDao.getMaxEiD()+1);
         user.setId(SequenceUtils.nextId()); //雪花算法ID生成
         user.setPassword("$2a$10$36A/etwTPl2PscyArcEpzeAyvhC3cd1IJZYMXv27jIp67j0BOOpJa");
-//        user.setRole();
         user.setJoinTime(new Date());
         user.setIsWork(Boolean.TRUE);
         userDao.save(user);
@@ -174,7 +172,7 @@ public class UsersService {
      */
     public List countByIsWorkAndBasicSalaryBetween(){
         List list = new ArrayList();
-        for(BasicSalary basicSalary: BasicSalary.values()){
+        for(BasicSalaryEnum basicSalary: BasicSalaryEnum.values()){
             Long count = userDao.countByIsWorkAndBasicSalaryBetween(Boolean.TRUE,basicSalary.getDown(),basicSalary.getUp());
             list.add(count);
         }
@@ -206,9 +204,8 @@ public class UsersService {
      */
     public  List getUserCountByJob( ){
         List list = new ArrayList();
-        for(Job job: Job.values()){
+        for(JobEnum job: JobEnum.values()){
             Long count = userDao.countByJobAndIsWork(job.getCode(),Boolean.TRUE);
-            System.out.println(job.getCode()+count);
            list.add(count);
         }
         return list;
@@ -229,8 +226,12 @@ public class UsersService {
         return userDao.findUsernameByUsernameLike(username);
     }
 
+    /**
+     * Excal全部导出
+     * @param response
+     */
     public void downExcel(HttpServletResponse response){
-        List<Users> list = getAllUser();
+        List<Users> list = userDao.findAll();
 
         //指定列表标题和工作表名称
         ExportParams params = new ExportParams("职员信息表","职员");
@@ -252,7 +253,11 @@ public class UsersService {
         return userDao.findAll();
     }
 
-
+    /**
+     * Excal批量导出
+     * @param response
+     * @param list
+     */
     public void downExcelByIds(HttpServletResponse response,List list){
         //指定列表标题和工作表名称
         ExportParams params = new ExportParams("职员信息表","职员");

@@ -32,6 +32,34 @@ public class RedisKeyUtil {
         stringRedisTemplate.expire(key, seconds, TimeUnit.SECONDS);
     }
 
+
+
+    /**
+     * 加锁
+     */
+    public boolean getLock(String key) {
+        try {
+            long count = redisTemplate.opsForValue().increment(key, 1);
+            if(count == 1000){
+                //设置有效期2秒
+                redisTemplate.expire(key, 2, TimeUnit.SECONDS);
+                return true;
+            }else{
+                long time = redisTemplate.getExpire(key,TimeUnit.SECONDS);
+                if(time == -1){
+                    //设置失败重新设置过期时间
+                    redisTemplate.expire(key, 2, TimeUnit.SECONDS);
+                    return true;
+                }
+            }
+            //如果存在表示重复
+            return false;
+        } catch (Exception e) {
+            redisTemplate.delete(key);		//出现异常删除锁
+            return true;
+        }
+    }
+
     /**
      * 获取匹配的key
      * @param pattern

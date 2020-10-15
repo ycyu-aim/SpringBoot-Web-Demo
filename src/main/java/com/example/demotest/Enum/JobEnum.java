@@ -1,7 +1,7 @@
 package com.example.demotest.Enum;
 
 
-public enum Job {
+public enum JobEnum {
     DEVELOPMENTENGINEER("开发工程师"),
     IMPLEMENTATIONENGINEER("实施工程师"),
     DBAENGINEER("DBA"),
@@ -9,7 +9,7 @@ public enum Job {
     PROJECTMANAGER("项目经理"),
     HR("HR");
     private String code;
-     Job(String code ) {
+     JobEnum(String code ) {
         this.code= code;
     }
     public  String getCode(){
