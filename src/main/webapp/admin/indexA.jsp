@@ -84,6 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a ><span class="white-text email">765341731@qq.com</span></a>
 				</div></li>
 				<li><a href="<%=basePath%>admin/home" target="table"><i class="material-icons" >view_list</i>人事仪盘表</a></li>
+				<li><a href="<%=basePath%>admin/log" target="table"><i class="material-icons" >view_list</i>请求日志仪盘表</a></li>
 				<li><a href="<%=basePath%>user/toUser.action" target="table"><i class="material-icons" >perm_contact_calendar</i>员工信息</a></li>
 				<li><a  onclick="logout()"><i class="material-icons" >report_problem</i>注销</a></li>
 					<div class="background">

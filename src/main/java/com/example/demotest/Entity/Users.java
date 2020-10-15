@@ -65,10 +65,6 @@ public class Users implements Serializable{
     @JoinColumn(name="rid",referencedColumnName="id")
     private Role role;
 
-    @ManyToOne( fetch=FetchType.EAGER,
-            targetEntity=Salary.class)
-    @JoinColumn(name="sid",referencedColumnName="id")
-    private Salary salary;
 }
 
 
